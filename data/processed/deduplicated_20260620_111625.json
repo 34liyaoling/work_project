@@ -1,0 +1,51 @@
+{
+  "source": "deduplicated",
+  "timestamp": "2026-06-20T11:16:25.962187",
+  "count": 2,
+  "records": [
+    {
+      "source": "manual",
+      "source_confidence": 0.8,
+      "timestamp": "2026-06-20 11:16:25.962100",
+      "raw_content": "",
+      "job_title": "Python开发工程师",
+      "company_name": null,
+      "skills": [
+        "Python"
+      ],
+      "salary_min": null,
+      "salary_max": null,
+      "location": null,
+      "experience_min": null,
+      "experience_max": null,
+      "education": null,
+      "industry": null,
+      "company_size": null,
+      "job_description": null,
+      "completeness_score": 0.8,
+      "freshness_score": 0.9
+    },
+    {
+      "source": "manual",
+      "source_confidence": 0.8,
+      "timestamp": "2026-06-20 11:16:25.962100",
+      "raw_content": "",
+      "job_title": "Java开发工程师",
+      "company_name": null,
+      "skills": [
+        "Java"
+      ],
+      "salary_min": null,
+      "salary_max": null,
+      "location": null,
+      "experience_min": null,
+      "experience_max": null,
+      "education": null,
+      "industry": null,
+      "company_size": null,
+      "job_description": null,
+      "completeness_score": 0.8,
+      "freshness_score": 0.9
+    }
+  ]
+}

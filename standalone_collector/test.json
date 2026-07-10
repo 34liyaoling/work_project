@@ -1,0 +1,29 @@
+{
+  "collected_at": "2026-06-27T23:14:32.968209",
+  "total_count": 1,
+  "stats": {
+    "by_source": {
+      "bing": 1,
+      "duckduckgo": 0
+    },
+    "by_keyword": {
+      "AI算法工程师": 1,
+      "机器学习工程师": 0,
+      "深度学习工程师": 0
+    }
+  },
+  "jobs": [
+    {
+      "job_title": "哔哩哔哩-招聘",
+      "company_name": "",
+      "salary_min": null,
+      "salary_max": null,
+      "location": "",
+      "skills": [],
+      "job_description": "5 天之前&ensp;&#0183;&ensp;哔哩哔哩招聘官方网站，你感兴趣的岗位都在哔哩哔哩！ 在B站，热爱不止，不止热爱！我们致力于不断完善职业发展通道 …",
+      "source": "bing_search",
+      "source_url": "https://jobs.bilibili.com/",
+      "collected_at": "2026-06-27T23:14:19.498357"
+    }
+  ]
+}

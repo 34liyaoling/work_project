@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  neo4j:
+    image: neo4j:5-community
+    container_name: kg-neo4j
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      NEO4J_AUTH: neo4j/kg_password_2024
+      NEO4J_PLUGINS: '["apoc"]'
+      NEO4J_memory_heap_initial__size: "512m"
+      NEO4J_memory_heap_max__size: "1G"
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+    healthcheck:
+      test: ["CMD", "cypher-shell", "-u", "neo4j", "-p", "kg_password_2024", "RETURN 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: kg-chromadb
+    ports:
+      - "8001:8000"
+    volumes:
+      - chroma_data:/chroma/chroma
+
+volumes:
+  neo4j_data:
+  neo4j_logs:
+  chroma_data:

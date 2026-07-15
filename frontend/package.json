@@ -1,0 +1,30 @@
+{
+  "name": "competency-graph-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "XH-202621 岗位和能力图谱 - 前端可视化",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 4173",
+    "lint": "eslint . --ext .vue,.js --fix"
+  },
+  "dependencies": {
+    "vue": "^3.4.38",
+    "vue-router": "^4.4.3",
+    "pinia": "^2.2.2",
+    "axios": "^1.7.4",
+    "@antv/g6": "^5.0.50",
+    "echarts": "^5.5.1",
+    "vue-echarts": "^7.0.3",
+    "element-plus": "^2.8.0",
+    "@element-plus/icons-vue": "^2.3.1",
+    "dayjs": "^1.11.13"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.2",
+    "vite": "^5.4.2",
+    "sass": "^1.77.8"
+  }
+}

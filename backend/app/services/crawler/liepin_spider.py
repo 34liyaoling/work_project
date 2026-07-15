@@ -1,0 +1,70 @@
+"""猎聘 Spider
+
+数据源：https://www.liepin.com
+反爬要点：
+    * UA 轮换
+    * 随机延时 2~4s（猎聘反爬严格）
+    * 默认走 mock
+"""
+from __future__ import annotations
+
+from typing import List, Optional
+
+from app.core.logger import log
+from app.services.crawler.base import BaseCrawler, JDItem
+
+
+class LiepinSpider(BaseCrawler):
+    """猎聘 JD 采集"""
+
+    source_name: str = "liepin"
+    base_url: str = "https://www.liepin.com"
+
+    LIST_URL = "https://www.liepin.com/zhaopin"
+    CARD_SELECTOR = "div.job-card"
+    TITLE_SELECTOR = ".ellipsis-1"
+    COMPANY_SELECTOR = ".company-name"
+    SALARY_SELECTOR = ".salary"
+
+    def __init__(self, *args, min_interval: float = 2.0, max_interval: float = 4.0, **kwargs):
+        # 猎聘风控更严，延时间隔设大一些
+        super().__init__(*args, min_interval=min_interval, max_interval=max_interval, **kwargs)
+
+    async def fetch(self, url: str) -> Optional[str]:
+        return await self.request_with_retry(url)
+
+    def parse(self, html: str, **kwargs) -> List[JDItem]:
+        items: List[JDItem] = []
+        for i, node in enumerate(self.parse_html(html, self.CARD_SELECTOR)):
+            try:
+                t = node.select_one(self.TITLE_SELECTOR) if hasattr(node, "select_one") else None
+                c = node.select_one(self.COMPANY_SELECTOR) if hasattr(node, "select_one") else None
+                s = node.select_one(self.SALARY_SELECTOR) if hasattr(node, "select_one") else None
+                items.append(JDItem(
+                    jd_id=self.make_jd_id("lp", i),
+                    source=self.source_name,
+                    source_url=kwargs.get("page_url", ""),
+                    title=t.get_text(strip=True) if t else "",
+                    company=c.get_text(strip=True) if c else "",
+                    salary_range=self.salary_normalize(s.get_text(strip=True) if s else ""),
+                    raw_text=str(node)[:2000],
+                ))
+            except Exception as e:  # noqa: BLE001
+                log.error(f"[LiepinSpider] 解析第 {i} 张卡片失败: {e}")
+        return items
+
+    async def crawl(self, keyword: str = "Python", pages: int = 1) -> List[JDItem]:
+        log.info(f"[LiepinSpider] keyword={keyword} pages={pages} use_mock={self.use_mock}")
+        if self.use_mock:
+            return self._crawl_mock(keyword, pages)
+        all_items: List[JDItem] = []
+        for page in range(1, pages + 1):
+            url = f"{self.LIST_URL}/?key={keyword}&curPage={page}"
+            html = await self.fetch(url)
+            if not html:
+                continue
+            all_items.extend(self.parse(html, page_url=url))
+        return self.save(all_items)
+
+
+__all__ = ["LiepinSpider"]
